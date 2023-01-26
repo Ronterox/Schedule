@@ -33,28 +33,32 @@ def create_calendar(year, month, events):
                         evs_txt = [e[0] for e in evs]
                         evs_hours = [float(f'{events[e[1]]["hours"] / len(events[e[1]]["days"]):0.2f}') for e in evs]
                         evs_total = sum(evs_hours)
-                        idx = evs_hours.index(max(evs_hours))
-                        
-                        for event in events:
-                            if event["name"] == evs_txt[idx]:
-                                idx = events.index(event)
-                                break
 
-                        bg_col, fg_col = COLOR_PAL[idx % len(COLOR_PAL)]
+                        if evs:
+                            idx = evs_hours.index(max(evs_hours))
+                            for event in events:
+                                if event["name"] == evs_txt[idx]:
+                                    idx = events.index(event)
+                                    break
+                            bg_col, fg_col = COLOR_PAL[idx % len(COLOR_PAL)]
+                        else:
+                            bg_col, fg_col = None, None
+
                         label.config(text=f'{day}\n{evs_txt}\n{evs_hours}\nTotally: {evs_total}h',
                                      bg=bg_col, fg=fg_col)
 
                     curr_event = (events[index]["name"], index)
+                    evs_days = events[index]["days"]
 
-                    if day in events[index]["days"]:
-                        events[index]["days"].remove(day)
+                    if day in evs_days:
                         lab, evs = labels[day - 1]
+                        evs_days.remove(day)
                         evs.remove(curr_event)
                         update_label(lab, evs, day)
                     else:
-                        events[index]["days"].add(day)
+                        evs_days.add(day)
 
-                    for d in events[index]["days"]:
+                    for d in evs_days:
                         label, evs = labels[d - 1]
                         evs.add(curr_event)
                         update_label(label, evs, d)
