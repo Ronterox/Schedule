@@ -1,10 +1,11 @@
 import tkinter as tk
 
-def create_loadingbar_event_countdown(event):
-    root = tk.Tk()
+def create_progress(event, root=None):
+    root = tk.Toplevel(root) if root else tk.Tk()
     root.title(f"Countdown for {event['name']}")
     root.geometry("300x100")
     root.resizable(False, False)
+    root.bind("<Control-w>", lambda _: root.destroy())
     
     # create loading bar
     loadingbar = tk.Canvas(root, width=300, height=100, bg="white")
@@ -38,10 +39,9 @@ def create_loadingbar_event_countdown(event):
         root.after(1000, update_loadingbar)
     
     update_loadingbar()
-            
-    root.bind("<Control-w>", lambda _: root.destroy())
-    root.mainloop()
+    return root
     
 
-event = {"name": "Event", "hours": 0.005 }
-create_loadingbar_event_countdown(event)
+# event = {"name": "Event", "hours": 0.005 }
+# root = create_progress(event)
+# root.mainloop()
