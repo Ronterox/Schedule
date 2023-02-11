@@ -15,11 +15,14 @@ def create_events():
     events = []
     while True:
         try:
+            for i, event in enumerate(events):
+                print(f"{i}: {event}")
             name = input("Event name: ")
             if name == "":
                 break
             hours = int(input("Hours: "))
-            types = input("Type: " + ", ".join([t.name for t in Types]) + ": ").upper()
+            types = input(
+                "Type: " + ", ".join([t.name for t in Types]) + ": ").upper()
             if types not in Types._member_names_:
                 raise ValueError
             events.append([name, hours, Types[types]])
@@ -39,7 +42,9 @@ def reorder_events_priority(events):
                 break
             print("Enter the index you want to move it to")
             idx2 = int(input())
-            events.insert(idx2 % len(events), events.pop(idx % len(events)))
+            if idx2 < 0 or idx2 >= len(events) or idx >= len(events):
+                raise ValueError
+            events[idx2], events[idx] = events[idx], events[idx2]
         except ValueError:
             print("Invalid input")
     return events
