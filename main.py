@@ -1,10 +1,9 @@
+from mentalheatlh import create_events, reorder_events_priority
 from schedule import create_calendar
 from timeblock import create_tblock
 from datetime import datetime
 
-# This is gonna be VIMable
-events = [["Study", 4], ["Break Time\n(Add me \nautomatically)", 2], ["Interactive/Gamify/'Force to know why' the why of things. Don't assume", 2], [
-    "Better Watchfile", 1], ["VIM your whole world", 2]]
+events = reorder_events_priority(create_events())
 
 now = datetime.now()
 events = create_calendar(now.year, now.month, events)

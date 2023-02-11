@@ -1,22 +1,12 @@
 import calendar
 import tkinter as tk
-import random
-
-COLOR_PAL = [('black', 'white'), ('white', 'black'), ('red', 'white'), ('blue', 'white'), ('green', 'white'), ('yellow', 'black'),
-             ('orange', 'black'), ('purple', 'white'), ('pink', 'black'), ('brown', 'white'), ('grey', 'black'), ('cyan', 'black')]
-
-random.shuffle(COLOR_PAL)
-
-
-def get_color(index):
-    return COLOR_PAL[index % len(COLOR_PAL)]
+from utilities import get_color, create_tk
 
 
 def create_calendar(year, month, events):
     index = 0
-
-    root = tk.Tk()
-    root.title(f"Calendar for {calendar.month_name[month]} {year}")
+    root = create_tk(
+        tk.Tk(), f"Calendar for {calendar.month_name[month]} {year}")
 
     for i in range(len(events)):
         events[i] = {"name": events[i][0],
@@ -106,7 +96,11 @@ def create_calendar(year, month, events):
 
     update_mouse_label()
 
-    root.bind("<Control-w>", lambda _: root.destroy())
     root.bind("<Button-3>", update_idx)
     root.mainloop()
-    return [ e for e in events if e["days"] ]
+    return [e for e in events if e["days"]]
+
+# events = [["Study", 4, Types.STUDY], ["Break Time\n(Add me \nautomatically)", 2, Types.PROGRAM], ["Interactive/Gamify/'Force to know why' the why of things. Don't assume", 2, Types.STUDY], [
+#     "Better Watchfile", 1, Types.CREATE], ["VIM your whole world", 2, Types.CREATE]]
+
+# events = create_calendar(2023, 1, events)
