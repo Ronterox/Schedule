@@ -100,7 +100,10 @@ def create_calendar(year, month, events):
     root.mainloop()
     return [e for e in events if e["days"]]
 
-# events = [["Study", 4, Types.STUDY], ["Break Time\n(Add me \nautomatically)", 2, Types.PROGRAM], ["Interactive/Gamify/'Force to know why' the why of things. Don't assume", 2, Types.STUDY], [
-#     "Better Watchfile", 1, Types.CREATE], ["VIM your whole world", 2, Types.CREATE]]
+if __name__ == "__main__":
+    from types import Types
 
-# events = create_calendar(2023, 1, events)
+    events = [["Study", 4, Types.STUDY], ["Break Time\n(Add me \nautomatically)", 2, Types.PROGRAM], ["Interactive/Gamify/'Force to know why' the why of things. Don't assume", 2, Types.STUDY], [
+        "Better Watchfile", 1, Types.CREATE], ["VIM your whole world", 2, Types.CREATE]]
+
+    events = create_calendar(2023, 1, events)

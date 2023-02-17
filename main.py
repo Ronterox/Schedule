@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-from mentalheatlh import create_events, reorder_events_priority
+from starter import create_events, reorder_events_priority
 from schedule import create_calendar
 from timeblock import create_tblock
 from datetime import datetime

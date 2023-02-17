@@ -28,7 +28,8 @@ def create_tblock(year, month, day, events, start_time=(9, 0)):
             pgbar = pgbar.destroy()
 
         tblock_start = event.widget.get().split("-")[0].split(":")
-        hour, minute = int(tblock_start[0]) % 24, int(tblock_start[1]) % 60 if len(tblock_start) > 1 else 0
+        hour, minute = int(tblock_start[0]) % 24, int(
+            tblock_start[1]) % 60 if len(tblock_start) > 1 else 0
         event.widget.delete(0, tk.END)
         last_hour = get_next_hour(hour, 0)
         start_time = hour, minute
@@ -147,19 +148,20 @@ def create_tblock(year, month, day, events, start_time=(9, 0)):
         break_button(i + 1, i * 2 + 1)
 
     if NUM_EVENTS > 1:
-        create_event_interval(NUM_EVENTS - 1)    
-    
+        create_event_interval(NUM_EVENTS - 1)
+
     def handle_click(_):
         label_input.focus_set()
         label_input.event_generate("<Return>")
-    
-    root.bind("<Button-1>", handle_click)    
+
+    root.bind("<Button-1>", handle_click)
     root.mainloop()
 
 
-# print("\nYou can click on the event name to see more information about it.")
-# now = datetime.now()
-# events = [{"name": "Math", "hours": 2, "days": set([now.day, 3])},
-#           {"name": "Jumping", "hours": 2, "days": set([now.day, 3])},
-#           {"name": "English", "hours": 3, "days": set([now.day])}]
-# create_tblock(now.year, now.month, now.day, events)
+if __name__ == "__main__":
+    print("\nYou can click on the event name to see more information about it.")
+    now = datetime.now()
+    events = [{"name": "Math", "hours": 2, "days": set([now.day, 3])},
+              {"name": "Jumping", "hours": 2, "days": set([now.day, 3])},
+              {"name": "English", "hours": 3, "days": set([now.day])}]
+    create_tblock(now.year, now.month, now.day, events)

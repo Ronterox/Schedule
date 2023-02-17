@@ -50,6 +50,7 @@ def reorder_events_priority(events):
     return events
 
 
-# events = create_events()
-# events = reorder_events_priority(events)
-# print(events)
+if __name__ == "__main__":
+    events = create_events()
+    events = reorder_events_priority(events)
+    print(events)
