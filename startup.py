@@ -1,7 +1,8 @@
 from enum import Enum
+import json
 
 
-class Types(Enum):
+class EventTypes(Enum):
     HACK = 0
     IRL = 1
     CREATE = 2
@@ -11,8 +12,7 @@ class Types(Enum):
     PROGRAM = 6
 
 
-def create_events():
-    events = []
+def create_events(events=[]):
     while True:
         try:
             for i, event in enumerate(events):
@@ -22,10 +22,10 @@ def create_events():
                 break
             hours = int(input("Hours: "))
             types = input(
-                "Type: " + ", ".join([t.name for t in Types]) + ": ").upper()
-            if types not in Types._member_names_:
+                "Type: " + ", ".join(EventTypes._member_names_) + ": ").upper()
+            if types not in EventTypes._member_names_:
                 raise ValueError
-            events.append([name, hours, Types[types]])
+            events.append([name, hours, EventTypes[types].name])
         except ValueError:
             print("Invalid input")
     return events
@@ -50,7 +50,26 @@ def reorder_events_priority(events):
     return events
 
 
+def load_events():
+    try:
+        return json.load(open("data.json"))
+    except FileNotFoundError:
+        return []
+
+
+def save_events(events):
+    if isinstance(events[0], dict):
+        input_events = []
+        for event in events:
+            input_events.append(
+                [event["name"], event["hours"], event["type"], list(event["days"])])
+        events = input_events
+    json.dump(events, open("data.json", "w"))
+
+
 if __name__ == "__main__":
-    events = create_events()
+    old_data = load_events()
+    events = create_events(old_data)
     events = reorder_events_priority(events)
+    save_events(events)
     print(events)

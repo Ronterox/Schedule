@@ -6,8 +6,7 @@ import calendar
 
 
 def create_tblock(year, month, day, events, start_time=(9, 0)):
-    root = create_tk(
-        tk.Tk(), f"Timeblock for {calendar.month_name[month]} {year} {day}", 400, 400)
+    root = create_tk(tk.Tk(), f"Timeblock for {calendar.month_name[month]} {year} {day}", 400, 400)
     day_events = [e for e in events if day in e["days"]]
     if not day_events:
         return
@@ -36,8 +35,7 @@ def create_tblock(year, month, day, events, start_time=(9, 0)):
 
         def tblock_color(tblock):
             tblocks = tblock.split("-")
-            def gtime(i): return datetime.strptime(
-                tblocks[i] + f" {year}-{month}-{day}", "%H:%M %Y-%m-%d")
+            def gtime(i): return datetime.strptime(tblocks[i] + f" {year}-{month}-{day}", "%H:%M %Y-%m-%d")
             finish = gtime(1)
             return tblock, gtime(0) <= datetime.now() < finish, (finish - datetime.now()).total_seconds() / 3600
 
@@ -48,8 +46,7 @@ def create_tblock(year, month, day, events, start_time=(9, 0)):
             if in_interval:
                 nonlocal pgbar
                 d = day_events[i]
-                pgbar = create_progress(
-                    {"name": d["name"], "hours": time_left}, root, color=i)
+                pgbar = create_progress({"name": d["name"], "hours": time_left}, root, color=i)
 
         check_interval(in_interval, 0, time_left)
         event.widget.config(bg="pink" if in_interval else "gray")
@@ -119,8 +116,7 @@ def create_tblock(year, month, day, events, start_time=(9, 0)):
         for j in range(NUM_EVENTS):
             if i == j and not (is_break(j - 1) or is_break(j)):
                 if not remove:
-                    events_break.append(
-                        {"name": "Break", "hours": 1, "days": set([day])})
+                    events_break.append({"name": "Break", "hours": 1, "days": [day]})
             events_break.append(day_events[j])
         create_tblock(year, month, day, events_break, start_time)
 

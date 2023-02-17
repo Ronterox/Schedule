@@ -29,7 +29,7 @@ def create_progress(event, root=None, color=0):
         width = 300 * (1 - event_seconds / (event['hours'] * 3600))
         loadingbar.create_rectangle(0, 0, width, 100, fill=bg)
         countdown.config(
-            text=f"{event_seconds / 3600:.0f}h {event_seconds % 3600 / 60:.0f}m {event_seconds % 60:.0f}s", fg=fg, bg=bg)
+            text=f"{event_seconds / 3600 % 24:.0f}h {event_seconds / 60 % 60:.0f}m {event_seconds % 60:.0f}s", fg=fg, bg=bg)
         root.after(1000, update_loadingbar)
 
     update_loadingbar()
